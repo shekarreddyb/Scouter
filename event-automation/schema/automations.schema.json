@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event Automation Rules",
+  "description": "VS Code extension rules. Each rule watches for VS Code events and publishes them via UDP to a desktop utility.",
+  "type": "object",
+  "properties": {
+    "config": {
+      "type": "object",
+      "properties": {
+        "publishTo": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ],
+          "default": "udp://127.0.0.1:38471",
+          "description": "UDP target(s) for publish actions. e.g. \"udp://127.0.0.1:38471\""
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "commands": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Custom palette command IDs that emit command.<id> events."
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/rule" }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "rule": {
+      "type": "object",
+      "required": ["on", "do"],
+      "properties": {
+        "name": { "type": "string" },
+        "on": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ],
+          "description": "Event name(s) that trigger this rule, e.g. \"test.passed\" or [\"task.finished\", \"test.failed\"]"
+        },
+        "when": {
+          "type": "string",
+          "description": "Optional filter expression, e.g. \"exitCode == 0\" or \"duration > 30000\""
+        },
+        "cooldown": {
+          "type": ["string", "number"],
+          "description": "Minimum time between firings, e.g. \"5s\" or \"2m\""
+        },
+        "once": { "type": "boolean", "description": "Fire at most once per session." },
+        "priority": { "type": "number", "description": "Higher runs first when multiple rules match." },
+        "stop": { "type": "boolean", "description": "Stop evaluating further rules after this one fires." },
+        "enabled": { "type": "boolean", "default": true },
+        "execute": {
+          "enum": ["sequential", "parallel"],
+          "default": "sequential",
+          "description": "Whether do[] actions run one-by-one (default) or all at once."
+        },
+        "do": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/action" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "description": "One action to perform when the rule fires.",
+      "properties": {
+        "publish": {
+          "type": "string",
+          "description": "Event type to publish via UDP, e.g. \"test.passed\""
+        },
+        "to": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ],
+          "description": "Override publish target(s) for this action only."
+        },
+        "payload": {
+          "type": "object",
+          "description": "Key-value pairs forwarded in the event. String values support ${variable} interpolation.",
+          "additionalProperties": true
+        },
+        "parallel": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/action" },
+          "description": "Run a group of actions concurrently; continues to next step only when all finish."
+        },
+        "notify": {
+          "type": "string",
+          "description": "Show a VS Code notification with this message."
+        },
+        "level": {
+          "enum": ["info", "warning", "error"],
+          "default": "info"
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label"],
+            "properties": {
+              "label": { "type": "string" },
+              "command": { "type": "string", "description": "VS Code command to run when clicked." },
+              "run": { "type": "string", "description": "Shell command to run when clicked." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "run": {
+          "type": "string",
+          "description": "Run a shell command in the integrated terminal."
+        },
+        "cwd": {
+          "type": "string",
+          "description": "Working directory for the run action."
+        },
+        "command": {
+          "type": "string",
+          "description": "Execute a VS Code command by ID."
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments passed to the VS Code command."
+        },
+        "webhook": {
+          "type": "string",
+          "description": "Send an HTTP request to this URL."
+        },
+        "method": {
+          "type": "string",
+          "default": "POST"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "body": { "type": "string" },
+        "statusBar": {
+          "type": "string",
+          "description": "Show text in the VS Code status bar."
+        },
+        "color": { "type": "string" },
+        "tooltip": { "type": "string" },
+        "timeout": {
+          "type": "string",
+          "description": "How long to show the status bar item, e.g. \"4s\"."
+        }
+      }
+    }
+  }
+}

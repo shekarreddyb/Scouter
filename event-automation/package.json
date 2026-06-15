@@ -1,0 +1,100 @@
+{
+  "name": "event-automation",
+  "displayName": "Event Automation",
+  "description": "React to VS Code events (tests, tasks, terminal, debug, Git, workspace) by publishing events via UDP to a desktop utility.",
+  "version": "0.1.0",
+  "publisher": "your-name",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "images/icon.png",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "eventAutomation.reload",
+        "title": "Event Automation: Reload Rules"
+      },
+      {
+        "command": "eventAutomation.toggleMute",
+        "title": "Event Automation: Toggle Mute"
+      },
+      {
+        "command": "eventAutomation.testFire",
+        "title": "Event Automation: Test Fire a Rule"
+      },
+      {
+        "command": "eventAutomation.openConfig",
+        "title": "Event Automation: Open Config File"
+      },
+      {
+        "command": "eventAutomation.emitEvent",
+        "title": "Event Automation: Emit Custom Event"
+      }
+    ],
+    "configuration": {
+      "title": "Event Automation",
+      "properties": {
+        "eventAutomation.configFile": {
+          "type": "string",
+          "default": ".vscode/automations.yaml",
+          "description": "Workspace-relative path to the rules file (.yaml, .yml, .json or .jsonc)."
+        },
+        "eventAutomation.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Master enable/disable for all automations."
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "eventAutomation.reactions",
+          "name": "Reactions",
+          "icon": "images/icon.png"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "eventAutomation.reload",
+          "when": "view == eventAutomation.reactions",
+          "group": "navigation"
+        }
+      ]
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "automations.json",
+          "automations.jsonc"
+        ],
+        "url": "./schema/automations.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "jsonc-parser": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.93.0",
+    "typescript": "^5.5.0"
+  }
+}

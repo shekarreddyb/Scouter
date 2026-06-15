@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\" | Select-Object Name)",
+      "PowerShell(Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\\\\Microsoft VS Code\\\\resources\\\\app\" | Select-Object Name)",
+      "PowerShell(Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\\\\Microsoft VS Code\" | Select-Object Name)"
+    ]
+  }
+}

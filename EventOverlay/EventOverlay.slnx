@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EventOverlay.Core\EventOverlay.Core.csproj" />
+  <Project Path="EventOverlay.App\EventOverlay.App.csproj" />
+</Solution>

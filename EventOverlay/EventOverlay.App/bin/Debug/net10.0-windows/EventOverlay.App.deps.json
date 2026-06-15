@@ -1,0 +1,73 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "EventOverlay.App/1.0.0": {
+        "dependencies": {
+          "EventOverlay.Core": "1.0.0",
+          "XamlAnimatedGif": "2.2.0"
+        },
+        "runtime": {
+          "EventOverlay.App.dll": {}
+        }
+      },
+      "XamlAnimatedGif/2.2.0": {
+        "runtime": {
+          "lib/net5.0-windows7.0/XamlAnimatedGif.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        }
+      },
+      "YamlDotNet/16.3.0": {
+        "runtime": {
+          "lib/net8.0/YamlDotNet.dll": {
+            "assemblyVersion": "16.0.0.0",
+            "fileVersion": "16.3.0.0"
+          }
+        }
+      },
+      "EventOverlay.Core/1.0.0": {
+        "dependencies": {
+          "YamlDotNet": "16.3.0"
+        },
+        "runtime": {
+          "EventOverlay.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EventOverlay.App/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "XamlAnimatedGif/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r3nV9JB8smnLRpzI/LVqBS9szuky3l45BP3blVsns/1rmeS1kK3mATiESHPuSvJ46T5INdDhgqcIRdsX2xJbPQ==",
+      "path": "xamlanimatedgif/2.2.0",
+      "hashPath": "xamlanimatedgif.2.2.0.nupkg.sha512"
+    },
+    "YamlDotNet/16.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA==",
+      "path": "yamldotnet/16.3.0",
+      "hashPath": "yamldotnet.16.3.0.nupkg.sha512"
+    },
+    "EventOverlay.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

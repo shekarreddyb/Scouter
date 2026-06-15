@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "iErTT1oRfLg=",
+  "success": true,
+  "projectFilePath": "D:\\code\\vscode\\event-automation\\EventOverlay\\EventOverlay.App\\EventOverlay.App.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sheka\\.nuget\\packages\\xamlanimatedgif\\2.2.0\\xamlanimatedgif.2.2.0.nupkg.sha512",
+    "C:\\Users\\sheka\\.nuget\\packages\\yamldotnet\\16.3.0\\yamldotnet.16.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}

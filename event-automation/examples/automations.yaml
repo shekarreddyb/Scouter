@@ -1,0 +1,80 @@
+config:
+  publishTo: udp://127.0.0.1:38471   # desktop utility address
+
+rules:
+  # Save any file → publish event + show in status bar
+  - name: File saved
+    on: file.saved
+    cooldown: 3s
+    execute: parallel
+    do:
+      - publish: file.saved
+        payload:
+          file: "${file}"
+      - statusBar: "✅ ${file}"
+        timeout: 3s
+
+  # Tests passed → publish with stats
+  - name: Tests passed
+    on: test.passed
+    do:
+      - publish: test.passed
+        payload:
+          passed: "${passedTests}"
+          failed: "${failedTests}"
+          duration: "${duration}"
+
+  # Tests failed → publish + VS Code error notification
+  - name: Tests failed
+    on: test.failed
+    do:
+      - publish: test.failed
+        payload:
+          passed: "${passedTests}"
+          failed: "${failedTests}"
+          exitCode: "${exitCode}"
+      - notify: "💥 Tests failed (${failedTests} failing)"
+        level: error
+
+  # Task finished → publish with duration so the utility can decide
+  # whether to react (e.g. only for long-running tasks)
+  - name: Task finished
+    on: task.finished
+    do:
+      - publish: task.finished
+        payload:
+          task: "${taskName}"
+          exitCode: "${exitCode}"
+          duration: "${duration}"
+
+  # Pushed to main → publish to two targets in parallel
+  - name: Pushed to main
+    on: git.push
+    when: branch == "main"
+    do:
+      - parallel:
+          - publish: git.pushed
+            to: udp://127.0.0.1:38471
+            payload:
+              branch: "${branch}"
+          - publish: git.pushed
+            to: udp://192.168.1.50:38471   # second display / office screen
+            payload:
+              branch: "${branch}"
+
+  # Debug session started → publish so utility can show a "debugging" indicator
+  - name: Debug started
+    on: debug.started
+    do:
+      - publish: debug.started
+        payload:
+          name: "${sessionName}"
+
+  # Git commit → publish commit metadata
+  - name: Git commit
+    on: git.commit
+    do:
+      - publish: git.commit
+        payload:
+          branch: "${branch}"
+          message: "${message}"

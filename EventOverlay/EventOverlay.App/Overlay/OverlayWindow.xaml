@@ -1,0 +1,16 @@
+<Window
+    x:Class="EventOverlay.App.Overlay.OverlayWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStyle="None"
+    Topmost="True"
+    ShowInTaskbar="False"
+    ResizeMode="NoResize">
+
+    <!-- Single-cell Grid: children stack on top of each other,
+         each positioned independently by HorizontalAlignment / VerticalAlignment. -->
+    <Grid x:Name="Stage" Background="Transparent" />
+
+</Window>

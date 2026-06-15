@@ -1,0 +1,36 @@
+config:
+  publishTo: udp://127.0.0.1:38471
+
+rules:
+  - name: File saved
+    on: file.saved
+    cooldown: 3s
+    do:
+      - publish: file.saved
+        payload:
+          file: "${file}"
+
+  - name: Tests passed
+    on: test.passed
+    do:
+      - publish: test.passed
+        payload:
+          passed: "${passedTests}"
+          failed: "${failedTests}"
+
+  - name: Tests failed
+    on: test.failed
+    do:
+      - publish: test.failed
+        payload:
+          failed: "${failedTests}"
+          exitCode: "${exitCode}"
+
+  - name: Task finished
+    on: task.finished
+    do:
+      - publish: task.finished
+        payload:
+          task: "${taskName}"
+          exitCode: "${exitCode}"
+          duration: "${duration}"
